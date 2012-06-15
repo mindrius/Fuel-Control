@@ -1,27 +1,27 @@
 package com.mindrius.fuelcontrol.model;
 
-import java.util.Calendar;
-
 public class Fuel {
 
-	private Double amount;
-	private Double pricePerLiter;
-	private Calendar time;
-	private FuelType type;
+	private FuelType gasoline;
+	private FuelAmount amout;
+	private MonetaryValue currency;
 
-	public Double getAmount() {
-		return amount;
+	public Fuel(FuelType gasoline, FuelAmount amount, MonetaryValue currency) {
+		this.gasoline = gasoline;
+		this.amout = amount;
+		this.currency = currency;
 	}
 
-	public Double getPricePerLiter() {
-		return pricePerLiter;
+	public FuelType getGasoline() {
+		return gasoline;
 	}
 
-	public Calendar getTime() {
-		return time;
+	public FuelAmount getAmount() {
+		return amout;
 	}
 
-	public FuelType getType() {
-		return type;
+	public MonetaryValue getCurrency() {
+		return currency;
 	}
+
 }
