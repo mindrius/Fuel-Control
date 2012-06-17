@@ -2,18 +2,18 @@ package com.mindrius.fuelcontrol.model;
 
 public class Fuel {
 
-	private FuelType gasoline;
+	private FuelType type;
 	private FuelAmount amout;
 	private MonetaryValue currency;
 
-	public Fuel(FuelType gasoline, FuelAmount amount, MonetaryValue currency) {
-		this.gasoline = gasoline;
+	public Fuel(FuelType type, FuelAmount amount, MonetaryValue currency) {
+		this.type = type;
 		this.amout = amount;
 		this.currency = currency;
 	}
 
-	public FuelType getGasoline() {
-		return gasoline;
+	public FuelType getType() {
+		return type;
 	}
 
 	public FuelAmount getAmount() {
