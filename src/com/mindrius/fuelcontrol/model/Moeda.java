@@ -1,6 +1,6 @@
 package com.mindrius.fuelcontrol.model;
 
-public enum Currency {
+public enum Moeda {
 	BRL
 
 }

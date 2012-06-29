@@ -13,98 +13,93 @@ import org.junit.Test;
 
 public class VehicleTest {
 
-	private Fueling fueling;
-	private Fuel gasoline;
-	private Fuel etanol;
+	private Abastecimento abastecimento;
+	private Combustivel gasoline;
+	private Combustivel etanol;
 	private Calendar time;
 
 	@Before
 	public void setUp() {
 		time = Calendar.getInstance();
-		
-		fueling = new Fueling(time);
 
-		FuelAmount gasolineAmount = new FuelAmount(new BigDecimal("10.0"),
-				VolumeUnity.LITER);
-		MonetaryValue gasolineValue = new MonetaryValue(
-				new BigDecimal("2.799"), Currency.BRL);
+		abastecimento = new Abastecimento(time);
 
-		FuelAmount etanolAmount = new FuelAmount(new BigDecimal("20.0"),
-				VolumeUnity.LITER);
-		MonetaryValue etanolValue = new MonetaryValue(
-				new BigDecimal("1.699"), Currency.BRL);
+		QuantidadeDeCombustivel gasolineAmount = new QuantidadeDeCombustivel(new BigDecimal("10.0"),
+				UnidadeVolumetrica.LITRO);
+		ValorMonetario gasolineValue = new ValorMonetario(new BigDecimal("2.799"), Moeda.BRL);
 
-		gasoline = new Fuel(FuelType.GASOLINE, gasolineAmount, gasolineValue);
-		etanol = new Fuel(FuelType.ETANOL, etanolAmount, etanolValue);
+		QuantidadeDeCombustivel etanolAmount = new QuantidadeDeCombustivel(new BigDecimal("20.0"),
+				UnidadeVolumetrica.LITRO);
+		ValorMonetario etanolValue = new ValorMonetario(new BigDecimal("1.699"), Moeda.BRL);
+
+		gasoline = new Combustivel(TipoCombustivel.GASOLINA, gasolineAmount, gasolineValue);
+		etanol = new Combustivel(TipoCombustivel.ETANOL, etanolAmount, etanolValue);
 	}
 
 	@Test
 	public void shouldCreateAVehicle() throws Exception {
-		Vehicle vehicle = new Vehicle("C3");
-		assertNotNull(vehicle);
+		Veiculo veiculo = new Veiculo("C3");
+		assertNotNull(veiculo);
 	}
 
 	@Test
 	public void shouldAddFuelToAVehicle() throws Exception {
-		Vehicle vehicle = new Vehicle("C3");
+		Veiculo veiculo = new Veiculo("C3");
 
-		fueling.addFuel(gasoline);
+		abastecimento.addCombustivel(gasoline);
 
-		assertEquals(new MonetaryValue(new BigDecimal("27.99"), Currency.BRL),
-				fueling.getTotalValue());
+		assertEquals(new ValorMonetario(new BigDecimal("27.99"), Moeda.BRL), abastecimento.getValorTotal());
 
-		vehicle.addFueling(fueling);
+		veiculo.addAbastecimento(abastecimento);
 	}
 
 	@Test
 	public void shouldAddFuelToAVehicleAgain() throws Exception {
-		Vehicle vehicle = new Vehicle("C3");
+		Veiculo veiculo = new Veiculo("C3");
 
-		fueling.addFuel(gasoline);
-		fueling.addFuel(etanol);
+		abastecimento.addCombustivel(gasoline);
+		abastecimento.addCombustivel(etanol);
 
-		assertEquals(new MonetaryValue(new BigDecimal("61.97"), Currency.BRL),
-				fueling.getTotalValue());
+		assertEquals(new ValorMonetario(new BigDecimal("61.97"), Moeda.BRL), abastecimento.getValorTotal());
 
-		vehicle.addFueling(fueling);
+		veiculo.addAbastecimento(abastecimento);
 	}
 
 	@Test
 	public void shouldProperlyAddAFuelingToAVehicle() throws Exception {
-		Vehicle vehicle = new Vehicle("C3");
+		Veiculo veiculo = new Veiculo("C3");
 
-		fueling.addFuel(gasoline);
-		fueling.addFuel(etanol);
+		abastecimento.addCombustivel(gasoline);
+		abastecimento.addCombustivel(etanol);
 
-		assertEquals(new MonetaryValue(new BigDecimal("61.97"), Currency.BRL),
-				fueling.getTotalValue());
+		assertEquals(new ValorMonetario(new BigDecimal("61.97"), Moeda.BRL), abastecimento.getValorTotal());
 
-		vehicle.addFueling(fueling);
+		veiculo.addAbastecimento(abastecimento);
 
-		List<Fueling> ret = vehicle.getFuelings();
+		List<Abastecimento> ret = veiculo.getAbastecimentos();
 
-		assertTrue(ret.contains(fueling));
+		assertTrue(ret.contains(abastecimento));
 		assertEquals(1, ret.size());
 	}
-	
+
 	@Test
 	public void shouldAddFuelTwiceToAVehicle() throws Exception {
-		Vehicle vehicle = new Vehicle("C3");
+		Veiculo veiculo = new Veiculo("C3");
 
-		fueling.addFuel(gasoline);
-		
-		Fueling fueling2 = new Fueling(Calendar.getInstance());
-		
-		fueling2.addFuel(etanol);
-		
-		vehicle.addFueling(fueling);
-		vehicle.addFueling(fueling2);
-		
-		List<Fueling> ret = vehicle.getFuelings();
-		
-		assertTrue(ret.contains(fueling));
+		abastecimento.addCombustivel(gasoline);
+
+		Abastecimento fueling2 = new Abastecimento(Calendar.getInstance());
+
+		fueling2.addCombustivel(etanol);
+
+		veiculo.addAbastecimento(abastecimento);
+		veiculo.addAbastecimento(fueling2);
+
+		List<Abastecimento> ret = veiculo.getAbastecimentos();
+
+		assertTrue(ret.contains(abastecimento));
 		assertTrue(ret.contains(fueling2));
-		
-		assertEquals(2, ret.size());	
+
+		assertEquals(2, ret.size());
 	}
 }

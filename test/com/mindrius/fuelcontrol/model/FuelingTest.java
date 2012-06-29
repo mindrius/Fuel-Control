@@ -13,8 +13,8 @@ public class FuelingTest {
 
 		Calendar calendar = Calendar.getInstance();
 		
-		Fueling fueling = new Fueling(calendar);
-		assertEquals(calendar, fueling.getTime());
+		Abastecimento abastecimento = new Abastecimento(calendar);
+		assertEquals(calendar, abastecimento.getData());
 		
 	}
 
